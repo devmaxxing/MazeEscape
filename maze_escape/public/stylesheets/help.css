@@ -6,6 +6,10 @@ h1 {
     font-size: 4em;
 }
 
+h3 {
+    font-size: 2.5em;
+}
+
 .container {
     display: grid;
     grid-template-rows: auto 1fr auto;
