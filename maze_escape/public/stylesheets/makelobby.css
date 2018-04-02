@@ -1,0 +1,38 @@
+.title-text::after {
+    content: "";
+    bottom: 0px;
+    width: 50%;
+    margin: auto;
+    border-bottom: 1px solid black;
+}
+
+.container {
+    display: grid;
+    grid-template-rows: auto 1fr repeat(3 ,auto);
+    grid-row-gap: 1em;
+}
+
+h1 {
+    font-size: 4em;
+}
+
+h3 {
+    font-size: 2.5em;
+}
+
+form label, form p {
+    font-size: 1.3em!important;
+}
+
+.required::after {
+    content: " *";
+    color: red;
+}
+
+#map-details {
+    font-size: 1.1em!important;
+}
+
+.hide-element {
+    display: none;
+}
