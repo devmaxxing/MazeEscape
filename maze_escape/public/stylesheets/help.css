@@ -1,0 +1,21 @@
+.help-text {
+    font-size: 1.2em;
+}
+
+h1 {
+    font-size: 4em;
+}
+
+.container {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-row-gap: 1em;
+}
+
+.title-text::after {
+    content: "";
+    bottom: 0px;
+    width: 50%;
+    margin: auto;
+    border-bottom: 1px solid black;
+}
