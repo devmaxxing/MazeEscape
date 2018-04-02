@@ -11,7 +11,10 @@ var bodyParser = require('body-parser');
 
 // Routes
 var index = require('./routes/index');
-var users = require('./routes/users');
+const help = require('./routes/help');
+const lobby = require('./routes/lobby');
+const lobbyList = require('./routes/lobbyList');
+const makeLobby = require('./routes/makeLobby');
 const test = require('./routes/test');
 
 var app = express();
@@ -43,8 +46,11 @@ app.use('/stylesheets', express.static(__dirname+'/node_modules/bootstrap/dist/c
 app.use('/javascripts', express.static(__dirname+'/node_modules/bootstrap/dist/js/'));
 
 app.use('/', index);
-app.use('/users', users);
 app.use('/test', test);
+app.use('/help', help);
+app.use('/lobby', lobby);
+app.use('/lobbyList', lobbyList);
+app.use('/makeLobby', makeLobby);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -63,6 +69,8 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+// Commented out the below for now. Suggestion would be to move it into the lobby router logic
 
 // var webServer = http.createServer(app);
 
