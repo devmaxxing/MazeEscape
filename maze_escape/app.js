@@ -1,7 +1,5 @@
 // Load required modules
 var http    = require("http");              // http server core module
-var socketIo = require("socket.io");        // web socket external module
-var easyrtc = require("easyrtc");               // EasyRTC external module
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');

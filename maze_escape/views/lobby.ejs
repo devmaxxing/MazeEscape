@@ -2,15 +2,68 @@
   <head>
     <!-- Stylesheets in here -->
     <% include ./partials/head %>
+    <link rel="stylesheet" href="/stylesheets/lobby.css">
   </head>
   <body>    
     <main class="container">
-        This is the lobby page
+      <div class="row title-text">
+        <div class="col-lg-12 text-center align-text-bottom">
+          <h1>MAZE ESCAPE</h1>
+          <h3 id="lobby-status">Waiting for Players</h3>
+        </div>
+      </div>
+      <div id="warning-alert-div" class="row hide-element">
+        <div id="warning-alert" class="alert alert-warning offset-lg-4 col-lg-4 text-center">
+          You are still waiting on 1 player(s), before you can start the lobby.
+        </div>
+      </div>
+      <div id="starting-alert-div" class="row hide-element">
+          <div id="warning-alert" class="alert alert-success offset-lg-4 col-lg-4 text-center">
+            Game starting in <span id="countdown-span">5</span>...
+          </div>
+        </div>
+      <div class="row offset-lg-3 col-lg-6 lobby-text">
+        <div class="col-lg-6 text-right">
+          <p>Lobby Name:</p>
+        </div>
+        <div class="col-lg-6 text-left">
+          <p>"The Best Room"</p>
+        </div>
+      </div>
+      <div class="row offset-lg-3 col-lg-6 lobby-text">
+        <div class="col-lg-6 text-right">
+          <p>Map Name:</p>
+        </div>
+        <div class="col-lg-6 text-left">
+          <p>"maze_escape"</p>
+        </div>
+      </div>
+      <br>
+      <div class="row offset-lg-3 col-lg-6">
+        <div class="text-center col-lg-12 lobby-text">
+          <p>Currently Selected Role: <span id="selected-role">Librarian</span></p>
+          <medium class="form-text text-muted">Click to Select Role From Buttons Below</medium>
+        </div>
+        <div class="col-lg-12 text-center class-buttons-container">
+          <button id="btn-lib" class="btn btn-lg activated-button" disabled>Librarian<br><span id="lib-btn-span">1/1</span></button>
+          <button id="btn-run" class="btn btn-lg">Runner<br><span id="run-btn-span">0/1</span></button>
+        </div>
+      </div>
+      <br><br>
+      <div class="row offset-lg-3 col-lg-6">
+          <div class="col-lg-12 text-center">
+            <button id="start-button" class="btn btn-lg btn-success">Start</button>
+            <a href="/lobbylist">
+              <button class="btn btn-lg btn-danger">Leave</button>
+            </a>
+          </div>
+        </div>
     </main>
 
     <footer>
       <!-- Scripts throw in here -->
       <% include ./partials/footer %>
+      <script src="/javascripts/lobby.js"></script>
     </footer>
   </body>
 </html>
