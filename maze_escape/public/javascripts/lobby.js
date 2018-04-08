@@ -68,10 +68,22 @@ function start () {
                 if (counter == 0) {
                     clearInterval(interval);
                     setState(STATE_PLAYING);
-                    //TODO set game objects properly
+                    initGame();
                     $("#game").removeAttr("hidden");
                 }
     },1000);
+}
+
+function initGame() {
+    if (currentRole = ROLE_LIBRARIAN) {
+        //set camera to overhead and disable movement
+        //bright lighting
+        //remove player networking
+        //remove hands
+        //enlarge scale of networked objects
+    } else if (currentRole = ROLE_EXPLORER) {
+        //play background audio
+    }
 }
 
 function syncRole (senderId, dataType, data, targetId) {
