@@ -1,5 +1,115 @@
-var roomName;
-var selfEasyrtcid;
+const STATE_WAITING = 0;
+const STATE_ROLE_SELECT = 1;
+const STATE_STARTING = 2;
+const STATE_PLAYING = 3;
+
+const STATUS_MESSAGES = {
+    0: "Waiting for players...",
+    1: "Waiting for all players to select a role...",
+    2: "Starting game...",
+    3: "In game"
+}
+
+
+const ROLE_NONE = 0;
+const ROLE_LIBRARIAN = 1;
+const ROLE_EXPLORER = 2;
+
+const ROLETEXT = {
+    0: "None",
+    1: "Librarian",
+    2: "Explorer"
+}
+
+const ROLEBUTTONS = {
+    0: null,
+    1: "#btn-lib",
+    2: "#btn-run"
+}
+
+const ROLESPANS = {
+    1: "#lib-btn-span",
+    2: "#run-btn-span"
+}
+
+var currentState = STATE_WAITING;
+
+var currentRole = ROLE_NONE;
+var otherRole = ROLE_NONE;
+
+var ready = false;
+var otherReady = false;
+
+function setState(state) {
+    currentState = state;
+    $("#lobby-status").text(STATUS_MESSAGES[currentState]);
+}
+
+function onConnect() {
+    console.log("OnConnect");
+    NAF.connection.subscribeToDataChannel("role", syncRole);
+    NAF.connection.subscribeToDataChannel("ready", syncStart);
+}
+
+function syncStart (senderId, dataType, data, targetId) {
+    otherReady = data;
+    if (otherReady && ready) {
+        start();
+    }
+}
+
+function start () {
+    setState(STATE_STARTING);
+    $('#starting-alert-div').slideToggle();
+            let counter = 5;
+            let interval = setInterval(() => {
+                counter--;
+                $('#countdown-span').html(counter);
+                if (counter == 0) {
+                    clearInterval(interval);
+                    setState(STATE_PLAYING);
+                    //TODO set game objects properly
+                    $("#game").removeAttr("hidden");
+                }
+    },1000);
+}
+
+function syncRole (senderId, dataType, data, targetId) {
+    console.log("Received role");
+    if (currentState == STATE_WAITING) {
+        setState(STATE_ROLE_SELECT);
+    }
+    if (data == 0) {
+        deselectRole(otherRole);
+        setRoleDisabled(otherRole, false);
+        otherRole = data;
+    } else if (data != currentRole) {
+        otherRole = data;
+        selectRole(otherRole);
+        setRoleDisabled(otherRole, true);
+    }
+}
+
+function setRoleDisabled(role, disabled) {
+    if (ROLEBUTTONS[role] != null) {
+        $(ROLEBUTTONS[role]).prop("disabled", disabled);
+        $(ROLEBUTTONS[role]).removeClass('activated-button');
+    }
+}
+
+function deselectRole(role) {
+    if (ROLEBUTTONS[role] != null) {
+        $(ROLEBUTTONS[role]).removeClass('activated-button');
+        $(ROLESPANS[role]).html("0/1");
+    }
+}
+
+function selectRole(role) {
+    if (ROLEBUTTONS[role] != null) {
+        $(ROLEBUTTONS[role]).addClass('activated-button');
+        $(ROLESPANS[role]).html("1/1");
+    }
+}
 
 $(() => {
     // Start Logic
@@ -9,130 +119,73 @@ $(() => {
     let $startingDiv = $('#starting-alert-div');
     let $countdownSpan = $('#countdown-span');
     let $lobbyStatus = $('#lobby-status');
-    roomName = $("#roomName").val()
-    connect();
 
-    $startButton.on('click', () => {
-        if (!startPressed) {
-            $warningDiv.slideToggle();
-            setTimeout(() => {
-                $warningDiv.slideToggle();
-            }, 4000);
-            startPressed = true;
-        } else {
-            $lobbyStatus = "Lobby Full";
-            fillRoles();
-            $startingDiv.slideToggle();
-            let counter = 5;
-            let interval = setInterval(() => {
-                counter--;
-                $countdownSpan.html(counter);
-                if (counter == 0) {
-                    clearInterval(interval);
-                    //location.href = "/test";
-                }
-            },1000);
-            
-        }
+    document.body.addEventListener('clientConnected', function (evt) {
+        console.error('clientConnected event. clientId =', evt.detail.clientId);
+        setState(STATE_ROLE_SELECT);
+        NAF.connection.broadcastData("role", currentRole);
     });
 
-    function connect() {
-        console.log("Initializing.");
-        easyrtc.enableVideo(false);
-        easyrtc.enableVideoReceive(false);
-        easyrtc.setRoomOccupantListener(callIfNewOccupant);
-        easyrtc.setStreamAcceptor(function(easyrtcid, stream, streamName){
-            console.log("Stream connected");
-            var audio = document.getElementById('callerAudio');
-            easyrtc.setVideoObjectSrc(audio,stream);
-         });
-        
-        easyrtc.setAcceptChecker( function(easyrtcid, acceptor){
-            acceptor(true);
-        });
+    document.body.addEventListener('clientDisconnected', function (evt) {
+        console.error('clientDisconnected event. clientId =', evt.detail.clientId);
+        setState(STATE_WAITING);
+        otherRole = 0;
+    });
 
-        easyrtc.initMediaSource(
-            function(){        // success callback
-                easyrtc.connect('maze_escape', loginSuccess, loginFailure);
-            },
-            function(errorCode, errmesg){
-                easyrtc.showError(errorCode, errmesg);
-            }  // failure callback
-        );
-    }
-
-    function callIfNewOccupant(room, occupants, isPrimary) {
-        if (roomName == room) {
-            console.log(roomName);
-            console.log(occupants);
-            console.log(isPrimary);
-            for (occupant in occupants) {
-                console.log("Trying to call " + occupant);
-                easyrtc.call(occupant,
-                    function (){console.log("Call success");},
-                    function(){console.log("Call failure");},
-                    function(accepted, caller){
-                        
-                    }
-                );
-                break;
-            }
+    $startButton.on('click', () => {
+            // $warningDiv.slideToggle();
+            // setTimeout(() => {
+            //     $warningDiv.slideToggle();
+            // }, 4000);
+        ready = true;
+        setRoleDisabled(ROLE_EXPLORER, true);
+        setRoleDisabled(ROLE_LIBRARIAN, true);
+        $startButton.prop("disabled", true);
+        if (otherReady) {
+            start();
         }
-    }
-
-    function loginSuccess(easyrtcid) {
-        selfEasyrtcid = easyrtcid;
-        console.log(easyrtcid);
-        easyrtc.joinRoom(roomName, null, roomJoinSuccess, roomJoinFailure);
-    }
-    
-    
-    function loginFailure(errorCode, message) {
-        easyrtc.showError(errorCode, message);
-    }
-
-    function roomJoinSuccess(roomName) {
-        console.log("Joined room " + roomName);
-    }
-
-    function roomJoinFailure(errorCode, message, roomName) {
-        easyrtc.showError(errorCode, message);
-    }
+        NAF.connection.broadcastData("ready", true);
+    });
 
     // Switching roles logic
     let $libBtn = $('#btn-lib');
     let $runBtn = $('#btn-run');
     let $selectedRole = $('#selected-role');
-    let libSelected = true;
     let $libBtnSpan = $('#lib-btn-span');
     let $runBtnSpan = $('#run-btn-span');
 
     $libBtn.on('click', () => {
-        if (libSelected) {
+        if (otherRole == ROLE_LIBRARIAN) {
             return;
         }
-        $selectedRole.html("Librarian");
-        $libBtn.addClass('activated-button');
-        $libBtn.attr('disabled', 'disabled');
-        $libBtnSpan.html('1/1');
-        $runBtn.removeClass('activated-button');
-        $runBtn.removeAttr('disabled');
-        $runBtnSpan.html('0/1');
-        libSelected = true;
+        deselectRole(currentRole);
+        if (currentRole == ROLE_LIBRARIAN) {
+            currentRole = ROLE_NONE;
+            $startButton.prop("disabled", true);
+        } else {
+            currentRole = ROLE_LIBRARIAN;
+            selectRole(currentRole);
+            $startButton.prop("disabled", false);
+        }
+        $selectedRole.text(ROLETEXT[currentRole]);
+        NAF.connection.broadcastData("role", currentRole);
     });
 
     $runBtn.on('click', () => {
-        if (!libSelected) {
+        if (otherRole == ROLE_EXPLORER) {
             return;
         }
-        $selectedRole.html("Runner");
-        $runBtn.addClass('activated-button');
-        $runBtn.attr('disabled', 'disabled');
-        $runBtnSpan.html('1/1');
-        $libBtn.removeClass('activated-button');
-        $libBtn.removeAttr('disabled');
-        $libBtnSpan.html('0/1');
-        libSelected = false;
+        deselectRole(currentRole);
+        if (currentRole == ROLE_EXPLORER) {
+            currentRole = ROLE_NONE;
+            $startButton.prop("disabled", true);
+        } else {
+            currentRole = ROLE_EXPLORER;
+            selectRole(currentRole);
+            $startButton.prop("disabled", false);
+        }
+        $selectedRole.text(ROLETEXT[currentRole]);
+        NAF.connection.broadcastData("role", currentRole);
     });
 
     function fillRoles() {
