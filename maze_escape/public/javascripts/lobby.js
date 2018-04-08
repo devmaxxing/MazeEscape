@@ -75,14 +75,24 @@ function start () {
 }
 
 function initGame() {
-    if (currentRole = ROLE_LIBRARIAN) {
+    if (currentRole == ROLE_LIBRARIAN) {
+        //remove network object
+        $("#player").remove();
         //set camera to overhead and disable movement
+        $("#rig").removeAttr("movement-controls");
+        $("#playerCamera").removeAttr("look-controls");
+        $("#playerCamera").attr("position", "-5 30 5");
+        $("#playerCamera").attr("rotation", "-90 0 0");
         //bright lighting
-        //remove player networking
+        $("#sceneLight").attr("light", "color: #ffffff; intensity: 2");
+        //remove flashlight
+        $("#flashlight").remove();
         //remove hands
+        $("#leftHand").remove();
+        $("#rightHand").remove();
         //enlarge scale of networked objects
-    } else if (currentRole = ROLE_EXPLORER) {
-        //play background audio
+    } else if (currentRole == ROLE_EXPLORER) {
+        $("#music").attr("src", "/sounds/Desolation.mp3");
     }
 }
 
@@ -136,12 +146,14 @@ $(() => {
         console.error('clientConnected event. clientId =', evt.detail.clientId);
         setState(STATE_ROLE_SELECT);
         NAF.connection.broadcastData("role", currentRole);
+        NAF.connection.broadcastData("ready", true);
     });
 
     document.body.addEventListener('clientDisconnected', function (evt) {
         console.error('clientDisconnected event. clientId =', evt.detail.clientId);
         setState(STATE_WAITING);
         otherRole = 0;
+        otherReady = false;
     });
 
     $startButton.on('click', () => {

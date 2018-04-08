@@ -11,7 +11,7 @@
 
     <script src="https://unpkg.com/aframe-randomizer-components@^3.0.1/dist/aframe-randomizer-components.min.js"></script>
     <script src="https://unpkg.com/aframe-particle-system-component@1.0.5/dist/aframe-particle-system-component.min.js"></script>
-    <script src="/javascripts/spawn-in-circle.component.js"></script>
+    <script src="/javascripts/follow-object.js"></script>
 
     <script>
       // Define custom schema for syncing avatar color, set by random-color
@@ -82,8 +82,11 @@
         <!-- /Templates -->
       </a-assets>
 
-      <a-entity id="player" networked="template:#avatar-template;showLocalTemplate:false;" camera spawn-in-circle="radius:3;" position="0 1.3 0" wasd-controls look-controls>
+      <a-entity id="player" camera position="0 1.3 0" wasd-controls look-controls>
       </a-entity>
+
+      <a-box networked="template:#avatar-template;showLocalTemplate:false;" position="0 1.3 0" rotation="0 0 0" follow-object="objectID: player" geometry="shape:box">
+      </a-box>
 
       <a-entity position="0 0 0"
         geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0"
