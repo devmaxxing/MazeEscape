@@ -1,3 +1,6 @@
+var roomName;
+var selfEasyrtcid;
+
 $(() => {
     // Start Logic
     let startPressed = false;
@@ -6,7 +9,9 @@ $(() => {
     let $startingDiv = $('#starting-alert-div');
     let $countdownSpan = $('#countdown-span');
     let $lobbyStatus = $('#lobby-status');
-    
+    roomName = $("#roomName").val()
+    connect();
+
     $startButton.on('click', () => {
         if (!startPressed) {
             $warningDiv.slideToggle();
@@ -24,12 +29,65 @@ $(() => {
                 $countdownSpan.html(counter);
                 if (counter == 0) {
                     clearInterval(interval);
-                    location.href = "/test";
+                    //location.href = "/test";
                 }
             },1000);
             
         }
     });
+
+    function connect() {
+        console.log("Initializing.");
+        easyrtc.enableVideo(false);
+        easyrtc.enableVideoReceive(false);
+
+        easyrtc.setStreamAcceptor(function(easyrtcid, stream, streamName){
+            var audio = document.getElementById('callerAudio');
+            easyrtc.setVideoObjectSrc(audio,stream);
+         });
+        
+        easyrtc.setAcceptChecker( function(easyrtcid, acceptor){
+            acceptor(true);
+        });
+
+        easyrtc.initMediaSource(
+            function(){        // success callback
+                easyrtc.connect('maze_escape', loginSuccess, loginFailure);
+            },
+            function(errorCode, errmesg){
+                easyrtc.showError(errorCode, errmesg);
+            }  // failure callback
+        );
+    }
+
+    function loginSuccess(easyrtcid) {
+        selfEasyrtcid = easyrtcid;
+        console.log(easyrtcid);
+        easyrtc.joinRoom(roomName, null, roomJoinSuccess, roomJoinFailure);
+    }
+    
+    
+    function loginFailure(errorCode, message) {
+        easyrtc.showError(errorCode, message);
+    }
+
+    function roomJoinSuccess(roomName) {
+        console.log("Joined room " + roomName);
+        var roomOccupants = easyrtc.getRoomOccupantsAsArray(roomName);
+        if (roomOccupants.length > 1) {
+            easyrtc.call(roomOccupants[0],
+                function (){console.log("Call success");},
+                function(){console.log("Call failure");},
+                function(accepted, caller){
+
+                }
+            );
+        }
+    }
+
+    function roomJoinFailure(errorCode, message, roomName) {
+        easyrtc.showError(errorCode, message);
+    }
 
     // Switching roles logic
     let $libBtn = $('#btn-lib');

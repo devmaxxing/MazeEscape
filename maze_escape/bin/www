@@ -71,7 +71,13 @@ easyrtc.events.on("roomJoin", function(connectionObj, roomName, roomParameter, c
 // Start EasyRTC server
 var rtc = easyrtc.listen(app, socketServer, null, function(err, rtcRef) {
     console.log("Initiated");
-
+    rtcRef.createApp("maze_escape",{roomDefaultFieldObj:[{"Map":{fieldValue:"Maze1", fieldOption:{isShared:true}}},
+                                                        {"Librarians":{fieldValue:[], fieldOption:{isShared:true}}},
+                                                        {"Explorers":{fieldValue:[], fieldOption:{isShared:true}}},
+                                                        {"NumLibrarians":{fieldValue:1, fieldOption:{isShared:true}}},
+                                                        {"NumExplorers":{fieldValue:1, fieldOption:{isShared:true}}}]}, function(err, appObj){
+        console.log("App Created!");
+    });
     rtcRef.events.on("roomCreate", function(appObj, creatorConnectionObj, roomName, roomOptions, callback) {
         console.log("roomCreate fired! Trying to create: " + roomName);
 

@@ -17,11 +17,11 @@
             <thead class="thead-dark">
               <tr>
                 <th class="align-middle">Room Name</th>
-                <th class="align-middle">Map Name</th>
-                <th>Roles Available <br><span class="thead-helper-text">(Click Role to Join)</span></th>
+                <th class="align-middle">Number of Players</th>
+                <th></th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id ="roomTable">
               <tr id="update-on-refresh-row">
                 <td>Gotta love escaping mazes!</td>
                 <td>maze_1</td>
@@ -29,35 +29,6 @@
                   <button type="button" class="btn btn-danger btn-small" disabled>Librarian (1/1)</button>
                   <button id="update-on-refresh-button" type="button" class="btn btn-success btn-small">Escaper (0/1)</button>
                 </td>
-              </tr>
-              <tr>
-                <td>What is life?</td>
-                <td>escape_the_house</td>
-                <td>
-                    <button type="button" class="btn btn-success btn-small">Investigator (0/1)</button>
-                    <button type="button" class="btn btn-success btn-small">Guests (1/2)</button>
-                    <button type="button" class="btn btn-danger btn-small" disabled>Haunter (1/1)</button>
-                  </td>
-              </tr>
-              <tr>
-                <td>The Best Room</td>
-                <td>maze_escape</td>
-                <td>
-                  <a href="/lobby">
-                    <button type="button" class="btn btn-success btn-small">Librarian (0/1)</button>
-                  </a>
-                  <a href="/lobby">
-                    <button type="button" class="btn btn-success btn-small">Runner (0/1)</button>
-                  </a>  
-                </td>
-                </tr>
-              <tr id="hidden-lobby" class="hidden-element">
-                <td>I'm Hidden!</td>
-                <td>hidden_man</td>
-                <td>
-                    <button type="button" class="btn btn-danger btn-small" disabled>Hidden-Man (1/1)</button>
-                    <button type="button" class="btn btn-success btn-small">Chasers (0/3)</button>
-                  </td>
               </tr>
             </tbody>
           </table>
@@ -96,6 +67,8 @@
     <footer>
       <!-- Scripts throw in here -->
       <% include ./partials/footer %>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js"></script>
+      <script src="/javascripts/easyrtc.js"></script>
       <script src="/javascripts/lobby-list.js"></script>
     </footer>
   </body>
