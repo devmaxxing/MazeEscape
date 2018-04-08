@@ -40,8 +40,9 @@ $(() => {
         console.log("Initializing.");
         easyrtc.enableVideo(false);
         easyrtc.enableVideoReceive(false);
-
+        easyrtc.setRoomOccupantListener(callIfNewOccupant);
         easyrtc.setStreamAcceptor(function(easyrtcid, stream, streamName){
+            console.log("Stream connected");
             var audio = document.getElementById('callerAudio');
             easyrtc.setVideoObjectSrc(audio,stream);
          });
@@ -60,6 +61,25 @@ $(() => {
         );
     }
 
+    function callIfNewOccupant(room, occupants, isPrimary) {
+        if (roomName == room) {
+            console.log(roomName);
+            console.log(occupants);
+            console.log(isPrimary);
+            for (occupant in occupants) {
+                console.log("Trying to call " + occupant);
+                easyrtc.call(occupant,
+                    function (){console.log("Call success");},
+                    function(){console.log("Call failure");},
+                    function(accepted, caller){
+                        
+                    }
+                );
+                break;
+            }
+        }
+    }
+
     function loginSuccess(easyrtcid) {
         selfEasyrtcid = easyrtcid;
         console.log(easyrtcid);
@@ -73,16 +93,6 @@ $(() => {
 
     function roomJoinSuccess(roomName) {
         console.log("Joined room " + roomName);
-        var roomOccupants = easyrtc.getRoomOccupantsAsArray(roomName);
-        if (roomOccupants.length > 1) {
-            easyrtc.call(roomOccupants[0],
-                function (){console.log("Call success");},
-                function(){console.log("Call failure");},
-                function(accepted, caller){
-
-                }
-            );
-        }
     }
 
     function roomJoinFailure(errorCode, message, roomName) {
