@@ -70,7 +70,7 @@ $(() => {
     }
 
     function connectToRoom(e) {
-        let element = event.target;
+        let element = e.target;
         let roomName = element.dataset.room;
         $.ajax({
             url: '/lobby/haspass/'+roomName,

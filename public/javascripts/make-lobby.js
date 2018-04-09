@@ -36,6 +36,8 @@ $(() => {
                         }
                     } else if(!errString) {
                         $form.submit();
+                    } else {
+                        $alert.html(errString);
                     }
                 }
             });
