@@ -20,17 +20,31 @@ $(() => {
             errString = appendToErrString(errString,"Please select a Map");
         }
 
-        if (!alertVisible) {
-            alertVisible = true;
+        if ($roomName.val()) {
+            $.ajax({
+                url: '/lobby/model/'+$roomName.val(),
+                type: 'GET',
+                success: (data) => {
+                    if (data) {
+                        errString = appendToErrString(errString, "Lobby name already exists");
+                        if (errString) {
+                            if (!alertVisible) {
+                                $alertDiv.slideToggle();
+                                alertVisible = true;
+                            }
+                            $alert.html(errString);
+                        }
+                    } else if(!errString) {
+                        $form.submit();
+                    }
+                }
+            });
         } else {
-            $alertDiv.hide();
-        }
-        $alertDiv.slideToggle();
-
-        $alert.html(errString);
-
-        if (!errString) {
-            $form.submit();
+            if (!alertVisible) {
+                $alertDiv.slideToggle();
+                alertVisible = true;
+            }
+            $alert.html(errString);
         }
     });
 
