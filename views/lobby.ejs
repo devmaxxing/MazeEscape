@@ -89,17 +89,17 @@
         <!-- /Templates -->
       </a-assets>
 
-      <a-entity id="mazeObject" gltf-model="#maze"></a-entity>
+      <a-entity id="mazeObject" gltf-model="#maze" position="0 0.1 0"></a-entity>
       <a-entity visible="false" id="mazeMap" gltf-model="#maze-map" position="0 -2.5 0"></a-entity>
       <!-- Nav Mesh -->
       <a-entity id="mazeNavMesh" visible="false" gltf-model="#maze-nav-mesh" nav-mesh></a-entity>
 
-      <a-entity id="rig" movement-controls="constrainToNavMesh: true" position="20.5 0 -20">
-          <a-entity id="playerCamera" camera look-controls>
+      <a-entity id="rig" progressive-controls movement-controls="constrainToNavMesh: true" position="20.5 0 -19.5">
+          <a-entity id="playerCamera" camera look-controls position="0 -0.45 0">
             <a-sound id="music" autoplay="true" loop="true"></a-sound>
           </a-entity>
-          <a-entity id="rightHand" hand-controls="right" super-hands class="right-controller"></a-entity>
-          <a-entity id="leftHand" hand-controls="left" super-hands class="left-controller"></a-entity>
+          <a-entity id="rightHand" position="0 -0.45 0" class="right-controller"></a-entity>
+          <a-entity id="leftHand" position="0 -0.45 0" class="left-controller"></a-entity>
       </a-entity>
 
       <a-entity id="player" networked="template:#avatar-template;showLocalTemplate:false;" follow-object="objectID: playerCamera"></a-entity>
@@ -107,7 +107,7 @@
       <a-entity static-body position="0 0 0"
         geometry="primitive: plane; width: 10000; height: 10000;" visible="false" rotation="-90 0 0"></a-entity>
 
-      <a-entity id="flashlight" grabbable gltf-model="#flashlightModel" position = "20.5 0.5 -19.5" scale="0.2 0.2 0.2" dynamic-body="shape:box;mass: 2">
+      <a-entity id="flashlight" grabbable gltf-model="#flashlightModel" position = "20.5 1 -19.5" scale="0.2 0.2 0.2" dynamic-body="shape:box; mass: 2">
           <a-entity light="type: spot;angle: 30" position = "0.1 0 0" rotation = "0 -90 0"></a-entity>
       </a-entity>
 
