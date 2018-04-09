@@ -45,12 +45,6 @@ function setState(state) {
     $("#lobby-status").text(STATUS_MESSAGES[currentState]);
 }
 
-function onConnect() {
-    console.log("OnConnect");
-    NAF.connection.subscribeToDataChannel("role", syncRole);
-    NAF.connection.subscribeToDataChannel("ready", syncStart);
-}
-
 function syncStart (senderId, dataType, data, targetId) {
     otherReady = data;
     if (otherReady && ready) {
