@@ -77,7 +77,7 @@
     ], 
     "meshes" : [
         {
-            "name" : "Navmesh.001", 
+            "name" : "Navmesh", 
             "primitives" : [
                 {
                     "attributes" : {

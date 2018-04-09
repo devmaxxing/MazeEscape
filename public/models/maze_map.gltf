@@ -77,7 +77,7 @@
     ], 
     "meshes" : [
         {
-            "name" : "Navmesh", 
+            "name" : "Navmesh.002", 
             "primitives" : [
                 {
                     "attributes" : {
@@ -92,7 +92,7 @@
     "nodes" : [
         {
             "mesh" : 0, 
-            "name" : "Navmesh"
+            "name" : "Navmesh.001"
         }
     ], 
     "scene" : 0, 

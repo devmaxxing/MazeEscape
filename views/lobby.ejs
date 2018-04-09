@@ -90,7 +90,7 @@
       </a-assets>
 
       <a-entity id="mazeObject" gltf-model="#maze"></a-entity>
-      <a-entity visible="false" id="mazeMap" gltf-model="#maze-map"></a-entity>
+      <a-entity visible="false" id="mazeMap" gltf-model="#maze-map" position="0 -2.5 0"></a-entity>
       <!-- Nav Mesh -->
       <a-entity id="mazeNavMesh" visible="false" gltf-model="#maze-nav-mesh" nav-mesh></a-entity>
 
@@ -104,7 +104,7 @@
 
       <a-entity id="player" networked="template:#avatar-template;showLocalTemplate:false;" follow-object="objectID: playerCamera"></a-entity>
 
-      <a-entity static-body position="0 0.1 0"
+      <a-entity static-body position="0 0 0"
         geometry="primitive: plane; width: 10000; height: 10000;" visible="false" rotation="-90 0 0"></a-entity>
 
       <a-entity id="flashlight" grabbable gltf-model="#flashlightModel" position = "20.5 0.5 -19.5" scale="0.2 0.2 0.2" dynamic-body="shape:box;mass: 2">
@@ -112,7 +112,7 @@
       </a-entity>
 
       <a-entity light="color: #ffffff; intensity: 1; type: ambient;" visible=""></a-entity>
-      <a-entity id = "sceneLight" light="color: #ffffff; intensity: 0" position="5 5 5"></a-entity>
+      <a-entity id = "sceneLight" light="color: #ffffff; intensity: 0.01" position="5 5 5"></a-entity>
 
       <a-sky color="#000000"></a-sky>
     </a-scene>
