@@ -44,10 +44,7 @@ $(() => {
     }
 
     let mapDetails = {
-        maze_1: 'Librarian (1) / Escaper (1)',
-        escape_the_house: 'Investigator (1) / Guests (2) / Haunter (1)',
-        maze_escape: 'Librarian (1) / Runner (1)',
-        hidden_man: 'Hidden-Man (1) / Chasers (3)'
+        maze_1: 'Librarian (1) / Runner (1)'
     };
 
     $selectedMap.on('change', () => {
