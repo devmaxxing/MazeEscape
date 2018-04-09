@@ -7,6 +7,14 @@ router.get('/', function(req, res, next) {
   res.render('lobby', { roomName: req.query.room });
 });
 
+router.get('/haspass/:name', (req, res) => {
+  res.send(model.hasPassword(req.params.name));
+});
+
+router.get('/checkpass/:name/:pass', (req, res) => {
+  res.send(model.checkPassword(req.params.name, req.params.pass));
+});
+
 router.get('/model/:name', (req, res, next) => {
   res.send(model.inList(req.params.name));
 });

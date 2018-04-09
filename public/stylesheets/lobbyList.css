@@ -40,3 +40,7 @@ tbody td {
 .hidden-element {
     display: none;
 }
+
+.lobby-text p {
+    font-size: 1.5em;
+}

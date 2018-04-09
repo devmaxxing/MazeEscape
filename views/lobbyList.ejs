@@ -38,9 +38,22 @@
               Successfully updated the lobby list!
           </div>
         </div>
-        <div id="unsuccessful-alert" class="row hidden-element">
-          <div class="alert alert-danger offset-lg-4 col-lg-4 text-center">
-            Sorry, something went wrong while updating the list. Try again in a few seconds :)
+        <div id="warning-alert" class="row hidden-element">
+          <div class="alert alert-warning offset-lg-4 col-lg-4 text-center">
+            The lobby you attempted to connect to is protected, please enter password below.
+          </div>
+        </div>
+        <div id="danger-alert-div" class="row hidden-element">
+            <div id="danger-alrt" class="alert alert-danger offset-lg-4 col-lg-4 text-center">
+              Incorrect password. Please try again.
+            </div>
+          </div>
+        <div id="password-row" class="hidden-element row offset-lg-4 col-lg-9">
+          <div class="col-lg-5 text-center input-group">
+              <input type="password" class="form-control" name="password" id="password-input" placeholder="Password">
+              <span class="input-group-btn">
+                <button id="enter-password-btn" class="btn btn-default" type="button">Enter</button>
+              </span>
           </div>
         </div>
         <div class="row">

@@ -57,8 +57,10 @@ $(() => {
         joinButton.classList.add("btn");
         joinButton.classList.add("btn-small");
         joinButton.classList.add("btn-success");
-        joinButton.onclick = function () {
-            location.href = "/lobby?room=" + roomName;
+        joinButton.setAttribute("data-room", roomName);
+        joinButton.onclick = function (e) {
+            // location.href = "/lobby?room=" + roomName;
+            connectToRoom(e);
         };
         buttonData.appendChild(joinButton);
         roomRow.appendChild(nameData);
@@ -66,6 +68,65 @@ $(() => {
         roomRow.appendChild(buttonData);
         document.getElementById("roomTable").appendChild(roomRow);
     }
+
+    function connectToRoom(e) {
+        let element = event.target;
+        let roomName = element.dataset.room;
+        $.ajax({
+            url: '/lobby/haspass/'+roomName,
+            type: 'GET',
+            success: (data) => {
+                if (data) {
+                    connectToProtectedRoom(roomName);
+                } else {
+                    location.href = "lobby?room="+roomName;
+                }
+            }
+        });
+    }
+
+    let $warningAlert = $('#warning-alert');
+    let $passwordRow = $('#password-row');
+    let $passwordInput = $('#password-input');
+    let $enterPass = $('#enter-password-btn');
+    let $dangerAlertDiv = $('#danger-alert-div');
+    let $dangerAlert = $('#danger-alert');
+    let currentPassLobby = '';
+
+    function connectToProtectedRoom(roomName) {
+        $warningAlert.slideDown();
+        setTimeout(() => {
+            $warningAlert.slideUp();
+        }, 3000);
+        $passwordRow.slideDown();
+        currentPassLobby = roomName;
+    }
+
+    $enterPass.on('click', () => {
+        if (!$passwordInput.val()) {
+            $dangerAlertDiv.slideDown();
+            $dangerAlert.html("Please enter a password");
+            setTimeout(() => {
+                $dangerAlertDiv.slideUp();
+            }, 2000);
+        } else {
+            $.ajax({
+                url: '/lobby/checkpass/'+currentPassLobby+'/'+$passwordInput.val(),
+                type: 'GET',
+                success: (data) => {
+                    if (data) {
+                        location.href = "lobby?room="+currentPassLobby;
+                    } else {
+                        $dangerAlertDiv.slideDown();
+                        $dangerAlert.html("Incorrect password. Please try again.");
+                        setTimeout(() => {
+                            $dangerAlertDiv.slideUp();
+                        }, 2000);
+                    }
+                }
+            });
+        }
+    });
 
     function setUpdating() {
         $refreshButton.html('Refreshing...');
