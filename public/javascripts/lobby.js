@@ -137,10 +137,12 @@ $(() => {
     let $startingDiv = $('#starting-alert-div');
     let $countdownSpan = $('#countdown-span');
     let $lobbyStatus = $('#lobby-status');
+    let $lobbyCount = $('#lobby-count');
 
     document.body.addEventListener('clientConnected', function (evt) {
         console.error('clientConnected event. clientId =', evt.detail.clientId);
         setState(STATE_ROLE_SELECT);
+        $lobbyCount.html('2');
         NAF.connection.broadcastData("role", currentRole);
         NAF.connection.broadcastData("ready", ready);
     });
@@ -148,6 +150,7 @@ $(() => {
     document.body.addEventListener('clientDisconnected', function (evt) {
         console.error('clientDisconnected event. clientId =', evt.detail.clientId);
         setState(STATE_WAITING);
+        $lobbyCount.html('1');
         otherRole = 0;
         otherReady = false;
     });
