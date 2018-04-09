@@ -3,9 +3,9 @@
         {
             "bufferView" : 0, 
             "componentType" : 5123, 
-            "count" : 8472, 
+            "count" : 8508, 
             "max" : [
-                4576
+                4597
             ], 
             "min" : [
                 0
@@ -15,7 +15,7 @@
         {
             "bufferView" : 1, 
             "componentType" : 5126, 
-            "count" : 4577, 
+            "count" : 4598, 
             "max" : [
                 1220.4720458984375, 
                 118.11019897460938, 
@@ -31,7 +31,7 @@
         {
             "bufferView" : 2, 
             "componentType" : 5126, 
-            "count" : 4577, 
+            "count" : 4598, 
             "max" : [
                 1.0, 
                 1.0, 
@@ -52,27 +52,35 @@
     "bufferViews" : [
         {
             "buffer" : 0, 
-            "byteLength" : 16944, 
+            "byteLength" : 17016, 
             "byteOffset" : 0, 
             "target" : 34963
         }, 
         {
             "buffer" : 0, 
-            "byteLength" : 54924, 
-            "byteOffset" : 16944, 
+            "byteLength" : 55176, 
+            "byteOffset" : 17016, 
             "target" : 34962
         }, 
         {
             "buffer" : 0, 
-            "byteLength" : 54924, 
-            "byteOffset" : 71868, 
+            "byteLength" : 55176, 
+            "byteOffset" : 72192, 
             "target" : 34962
         }
     ], 
     "buffers" : [
         {
-            "byteLength" : 126792, 
+            "byteLength" : 127368, 
             "uri" : "maze.bin"
+        }
+    ], 
+    "materials" : [
+        {
+            "name" : "material", 
+            "pbrMetallicRoughness" : {
+                "metallicFactor" : 0.0
+            }
         }
     ], 
     "meshes" : [
@@ -84,7 +92,8 @@
                         "NORMAL" : 2, 
                         "POSITION" : 1
                     }, 
-                    "indices" : 0
+                    "indices" : 0, 
+                    "material" : 0
                 }
             ]
         }

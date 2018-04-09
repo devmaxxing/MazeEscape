@@ -24,7 +24,7 @@
             "min" : [
                 1.3000000715255737, 
                 0.1899999976158142, 
-                -30.700000762939453
+                -29.80000114440918
             ], 
             "type" : "VEC3"
         }, 
@@ -77,7 +77,7 @@
     ], 
     "meshes" : [
         {
-            "name" : "Navmesh", 
+            "name" : "Navmesh.003", 
             "primitives" : [
                 {
                     "attributes" : {
@@ -92,7 +92,7 @@
     "nodes" : [
         {
             "mesh" : 0, 
-            "name" : "Navmesh"
+            "name" : "Navmesh.001"
         }
     ], 
     "scene" : 0, 

@@ -3,9 +3,9 @@
         {
             "bufferView" : 0, 
             "componentType" : 5123, 
-            "count" : 1653, 
+            "count" : 1665, 
             "max" : [
-                774
+                780
             ], 
             "min" : [
                 0
@@ -15,7 +15,7 @@
         {
             "bufferView" : 1, 
             "componentType" : 5126, 
-            "count" : 775, 
+            "count" : 781, 
             "max" : [
                 30.700000762939453, 
                 3.190000057220459, 
@@ -31,7 +31,7 @@
         {
             "bufferView" : 2, 
             "componentType" : 5126, 
-            "count" : 775, 
+            "count" : 781, 
             "max" : [
                 -0.0, 
                 1.0, 
@@ -52,32 +52,32 @@
     "bufferViews" : [
         {
             "buffer" : 0, 
-            "byteLength" : 3306, 
+            "byteLength" : 3330, 
             "byteOffset" : 0, 
             "target" : 34963
         }, 
         {
             "buffer" : 0, 
-            "byteLength" : 9300, 
-            "byteOffset" : 3308, 
+            "byteLength" : 9372, 
+            "byteOffset" : 3332, 
             "target" : 34962
         }, 
         {
             "buffer" : 0, 
-            "byteLength" : 9300, 
-            "byteOffset" : 12608, 
+            "byteLength" : 9372, 
+            "byteOffset" : 12704, 
             "target" : 34962
         }
     ], 
     "buffers" : [
         {
-            "byteLength" : 21908, 
+            "byteLength" : 22076, 
             "uri" : "maze_map.bin"
         }
     ], 
     "meshes" : [
         {
-            "name" : "Navmesh.002", 
+            "name" : "Navmesh.004", 
             "primitives" : [
                 {
                     "attributes" : {
@@ -92,7 +92,7 @@
     "nodes" : [
         {
             "mesh" : 0, 
-            "name" : "Navmesh.001"
+            "name" : "Navmesh.002"
         }
     ], 
     "scene" : 0, 
