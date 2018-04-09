@@ -17,6 +17,8 @@ $(() => {
     });
 
     function connect() {
+        easyrtc.enableAudio(false);
+        easyrtc.enableVideo(false);
         easyrtc.connect(
             "maze_escape", 
             loadRooms, 

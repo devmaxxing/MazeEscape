@@ -76,8 +76,6 @@ function start () {
 
 function initGame() {
     if (currentRole == ROLE_LIBRARIAN) {
-        //remove network object
-        $("#player").remove();
         //set camera to overhead and disable movement
         $("#rig").removeAttr("movement-controls");
         $("#playerCamera").removeAttr("look-controls");
@@ -90,9 +88,13 @@ function initGame() {
         //remove hands
         $("#leftHand").remove();
         $("#rightHand").remove();
+        $("#mazeMap").attr("visible", "true");
+        $("#mazeObject").remove();
         //enlarge scale of networked objects
     } else if (currentRole == ROLE_EXPLORER) {
         $("#music").attr("src", "/sounds/Desolation.mp3");
+        //hide the networked object
+        $(".avatar").attr("visible", "false");
     }
 }
 
@@ -146,7 +148,7 @@ $(() => {
         console.error('clientConnected event. clientId =', evt.detail.clientId);
         setState(STATE_ROLE_SELECT);
         NAF.connection.broadcastData("role", currentRole);
-        NAF.connection.broadcastData("ready", true);
+        NAF.connection.broadcastData("ready", ready);
     });
 
     document.body.addEventListener('clientDisconnected', function (evt) {
