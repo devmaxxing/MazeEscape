@@ -42,6 +42,23 @@ var myIceServers = [
   //   "credential":"[CREDENTIAL]"
   // }
 ];
+
+// self provided turn servers
+if (process.env.STUN_SERVER) {
+  myIceServers = [
+    {"url":process.env.STUN_SERVER}
+  ]
+  for (turnURL in process.env.TURN_SERVERS.split()) {
+    myIceServers.push(
+      {
+        "url":turnURL,
+        "username":process.env.TURN_USERNAME,
+        "credential":process.env.TURN_CREDENTIAL
+      }
+    )
+  }
+}
+
 easyrtc.setOption("appIceServers", myIceServers);
 easyrtc.setOption("logLevel", "debug");
 easyrtc.setOption("demosEnable", false);
