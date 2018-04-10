@@ -37,6 +37,10 @@ $(() => {
                     } else if(!errString) {
                         $form.submit();
                     } else {
+                        if (!alertVisible) {
+                            $alertDiv.slideToggle();
+                            alertVisible = true;
+                        }
                         $alert.html(errString);
                     }
                 }
