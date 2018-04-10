@@ -13,6 +13,7 @@
     <script src="https://unpkg.com/aframe-randomizer-components@^3.0.1/dist/aframe-randomizer-components.min.js"></script>
     <script src="https://unpkg.com/aframe-particle-system-component@1.0.5/dist/aframe-particle-system-component.min.js"></script>
     <script src="/javascripts/follow-object.js"></script>
+    <script src="/javascripts/exit.js"></script>
     <script src="https://unpkg.com/super-hands@2.1.0/dist/super-hands.min.js"></script>
 
     <script>
@@ -20,6 +21,7 @@
             console.log("OnConnect");
             NAF.connection.subscribeToDataChannel("role", syncRole);
             NAF.connection.subscribeToDataChannel("ready", syncStart);
+            NAF.connection.subscribeToDataChannel("finish", finish);
         }
         // Define custom schema for syncing avatar color, set by random-color
         NAF.schemas.add({
@@ -37,7 +39,7 @@
       </script>
   </head>
   <body>
-      <a-scene hidden id="game" networked-scene=<%- '"app:maze_escape; room:' + roomName + '; adapter:easyrtc; audio:true;"'%>>
+      <a-scene id="game" networked-scene=<%- '"app:maze_escape; room:' + roomName + '; adapter:easyrtc; audio:true;"'%>>
       <a-assets>
 
         <img id="grid" src="https://img.gs/bbdkhfbzkk/stretch/https://i.imgur.com/25P1geh.png" crossorigin="anonymous">
@@ -94,23 +96,25 @@
       <!-- Nav Mesh -->
       <a-entity id="mazeNavMesh" visible="false" gltf-model="#maze-nav-mesh" nav-mesh></a-entity>
 
-      <a-entity id="rig" progressive-controls movement-controls="constrainToNavMesh: true" position="20.5 0 -19.5">
-          <a-entity id="playerCamera" camera look-controls position="0 -0.45 0"></a-entity>
-          <a-entity id="rightHand" position="0 -0.45 0" class="right-controller"></a-entity>
-          <a-entity id="leftHand" position="0 -0.45 0" class="left-controller"></a-entity>
+      <a-entity id="rig" progressive-controls movement-controls="constrainToNavMesh: true" position="22 0.19 -19.5">
+          <a-entity id="playerCamera" camera look-controls rotation="0.97 -94 -3.5"></a-entity>
+          <a-entity id="rightHand"  class="right-controller"></a-entity>
+          <a-entity id="leftHand" class="left-controller"></a-entity>
       </a-entity>
 
       <a-entity id="player" networked="template:#avatar-template;showLocalTemplate:false;" follow-object="objectID: playerCamera"></a-entity>
 
-      <a-entity static-body position="0 0 0"
+      <a-entity static-body 
         geometry="primitive: plane; width: 10000; height: 10000;" visible="false" rotation="-90 0 0"></a-entity>
 
-      <a-entity id="flashlight" grabbable gltf-model="#flashlightModel" position = "20.5 1 -19.5" scale="0.2 0.2 0.2" dynamic-body="shape:box; mass: 2">
-          <a-entity light="type: spot;angle: 30" position = "0.1 0 0" rotation = "0 -90 0"></a-entity>
+      <a-entity id="flashlight" grabbable gltf-model="#flashlightModel" position = "24 0.5 -19.5" scale="0.2 0.2 0.2" dynamic-body="shape:box; mass: 2">
+          <a-entity light="type: spot;angle: 20; intensity:0.5" position = "0.1 0 0" rotation = "0 -90 0"></a-entity>
       </a-entity>
 
       <a-entity light="color: #ffffff; intensity: 0.01; type: ambient;" visible=""></a-entity>
-      <a-entity id = "sceneLight" light="color: #ffffff; intensity: 0" position="5 5 5"></a-entity>
+      <a-entity id = "sceneLight" light="color: #ffffff; intensity: 0.02" position="5 5 5"></a-entity>
+      <a-entity id="exit" visible="false" geometry="primitive: box; width: 1.5; height: 2; depth: 2;" position="1.5 1 0"  exit></a-entity>
+      <a-entity light="type:point; intensity:1; distance:1; decay:1;" position="1.5 1 0"></a-entity>
 
       <a-sky color="#000000"></a-sky>
     </a-scene>

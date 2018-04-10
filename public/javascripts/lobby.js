@@ -41,15 +41,6 @@ var ready = false;
 var otherReady = false;
 
 let startTime;
-let checkVictoryInterval;
-
-function checkVictory() {
-    let playerPos = document.querySelector('#playerCamera').object3D.parent.position;
-    if (playerPos.x >= 1.3 && playerPos.x <= 1.8 && playerPos.y == 0.19 && playerPos.z > -0.31) {
-        NAF.connection.broadcastData("finish", '');
-        finish();
-    }
-}
 
 function setState(state) {
     currentState = state;
@@ -63,15 +54,17 @@ function syncStart (senderId, dataType, data, targetId) {
     }
 }
 
-function finish() {
+function finish(senderId, dataType, data, targetId) {
     AFRAME.scenes[0].removeAttribute('networked-scene');
-    let endTime = new Date().getTime();
+    finish(data);
+}
+
+function finish(endTime) {
     let totalTimeMinutes = Math.round((endTime-startTime)/60000);
     $('#time-span').html(totalTimeMinutes);
     $('#finish-screen').show();
     $('#game').hide();
     $('#main-div').hide();
-    clearInterval(checkVictoryInterval);
 }
 
 function start () {
@@ -91,10 +84,6 @@ function start () {
 }
 
 function initGame() {
-    NAF.connection.subscribeToDataChannel("finish", () => {
-        finish();
-    });
-    checkVictoryInterval = setInterval(checkVictory, 5000);
     if (currentRole == ROLE_LIBRARIAN) {
         //set camera to overhead and disable movement
         $("#rig").removeAttr("movement-controls");
