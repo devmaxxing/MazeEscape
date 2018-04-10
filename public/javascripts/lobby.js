@@ -157,7 +157,6 @@ function selectRole(role) {
     }
 }
 
-<<<<<<< 8a62dd5196c6a38c2d14b9bc5a4164167aec50f5
 function setEntityY(entitySelector, y) {
     var entity = document.querySelector(entitySelector);
     var entityPos = entity.getAttribute("position");
@@ -169,9 +168,6 @@ function setPlayerHeight(y) {
     setEntityY("#leftHand", y);
     setEntityY("#rightHand", y);
 }
-=======
-
->>>>>>> win condition
 
 $(() => {
     // Start Logic
