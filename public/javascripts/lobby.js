@@ -192,12 +192,17 @@ $(() => {
 
     document.body.addEventListener('clientDisconnected', function (evt) {
         if (evt.detail.clientId == otherClientID) {
-            otherClientID = null;
-            console.error('clientDisconnected event. clientId =', evt.detail.clientId);
-            setState(STATE_WAITING);
-            $lobbyCount.html('1');
-            otherRole = 0;
-            otherReady = false;
+            if (currentState == STATE_PLAYING) {
+                alert("Client disconnected. Leaving game...")
+                location.href = "/lobbyList";
+            } else {
+                otherClientID = null;
+                console.error('clientDisconnected event. clientId =', evt.detail.clientId);
+                setState(STATE_WAITING);
+                $lobbyCount.html('1');
+                otherRole = 0;
+                otherReady = false;
+            }
         }
     });
 
