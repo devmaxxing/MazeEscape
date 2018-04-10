@@ -9,7 +9,7 @@
         <div class="row title-text">
             <div class="col-lg-12 text-center align-text-bottom">
               <h1>MAZE ESCAPE</h1>
-              <h3>Lobby List</h3>
+              <h3>Lobby</h3>
             </div>
         </div>
         <div class="row col-lg-10 offset-lg-1">
@@ -22,25 +22,25 @@
               </tr>
             </thead>
             <tbody id ="roomTable">
-              <tr id="update-on-refresh-row">
+              <!-- <tr id="update-on-refresh-row">
                 <td>Gotta love escaping mazes!</td>
                 <td>maze_1</td>
                 <td>
                   <button type="button" class="btn btn-danger btn-small" disabled>Librarian (1/1)</button>
-                  <button id="update-on-refresh-button" type="button" class="btn btn-success btn-small">Escaper (0/1)</button>
+                  <button id="update-on-refresh-button" type="button" class="btn btn-success btn-small">Explorer (0/1)</button>
                 </td>
-              </tr>
+              </tr> -->
             </tbody>
           </table>
         </div>
         <div id="successful-alert" class="row hidden-element">
           <div class="alert alert-success offset-lg-4 col-lg-4 text-center">
-              Successfully updated the lobby list!
+              Successfully updated the lobby!
           </div>
         </div>
         <div id="warning-alert" class="row hidden-element">
           <div class="alert alert-warning offset-lg-4 col-lg-4 text-center">
-            The lobby you attempted to connect to is protected, please enter password below.
+            The room you attempted to connect to is protected, please enter password below.
           </div>
         </div>
         <div id="danger-alert-div" class="row hidden-element">
@@ -58,13 +58,13 @@
         </div>
         <div class="row">
           <div class="col-lg-12 text-center">
-              <button id="refresh-button" type="button" class="btn btn-primary btn-lg">Refresh List</button>
+              <button id="refresh-button" type="button" class="btn btn-primary btn-lg">Refresh Lobby</button>
           </div>
         </div>
         <div class="row">
           <div class="col-lg-12 text-center">
               <a href="/makeLobby">
-                <button type="button" class="btn btn-primary btn-lg">Make New Lobby</button>
+                <button type="button" class="btn btn-primary btn-lg">Create New Room</button>
               </a>
           </div>
         </div>

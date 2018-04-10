@@ -26,7 +26,7 @@ $(() => {
                 type: 'GET',
                 success: (data) => {
                     if (data) {
-                        errString = appendToErrString(errString, "Lobby name already exists");
+                        errString = appendToErrString(errString, "Room name already exists");
                         if (errString) {
                             if (!alertVisible) {
                                 $alertDiv.slideToggle();

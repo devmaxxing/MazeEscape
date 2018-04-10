@@ -21,8 +21,25 @@ body:after {
     width: 250px;
     height: 100px;
     font-size: 30px;
+    margin-bottom: 15px;
 }
 
 h1 {
-    font-size: 6em;
+    font-size: 11em;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.landing-title {
+    margin-bottom: 5em;
+}
+
+.landing-button {
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+}
+
+.landing-button:hover {
+    border: #ffffff solid 1px;
 }
