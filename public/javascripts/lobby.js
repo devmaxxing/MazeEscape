@@ -106,11 +106,15 @@ function initGame() {
         $("#rightHand").remove();
         $("#mazeMap").attr("visible", "true");
         $("#mazeObject").remove();
-        //enlarge scale of networked objects
+        //remove runner objects
+        // $("#npc").removeAttr("networked");
+        // $("#npc").attr("visible", "false");
+        // $("#flute").remove();
     } else if (currentRole == ROLE_EXPLORER) {
         var audio = new Audio("/sounds/Desolation.mp3");
         audio.loop = true;
         audio.play();
+        $("#goal").remove();
         //hide the networked object
         $(".avatar").attr("visible", "false");
     }

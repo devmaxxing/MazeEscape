@@ -64,6 +64,12 @@
         <a-asset-item id="maze-nav-mesh" src="/models/maze_nav-mesh.gltf"></a-asset-item>
         <a-asset-item id="maze-map" src="/models/maze_map.gltf"></a-asset-item>
         <a-asset-item id="flashlightModel" src="/models/flashlight.gltf"></a-asset-item>
+        <a-asset-item id="npcModel" src="/models/monster.gltf"></a-asset-item>
+        <a-asset-item id="npcTexture" src=""></a-asset-item>
+        <a-asset-item id="npcNormal" src="/models/textures/default_normal.png"></a-asset-item>
+        <a-asset-item id="npcTexture" src="/models/textures/default_baseColor.png"></a-asset-item>
+        <a-asset-item id="npcRoughness" src="/models/textures/default_metallicRoughness.png"></a-asset-item>
+        <a-asset-item id="fluteModel" src="/models/flute.gltf"></a-asset-item>
 
         <!-- Templates -->
 
@@ -104,6 +110,11 @@
           </a-entity>
         </script>
 
+        <script id="flute-template" type="text/html">
+          <a-entity class="flute">
+            <a-box color="#ffffff"></a-box>
+          </a-entity>
+        </script>
         <!-- /Templates -->
       </a-assets>
 
@@ -118,7 +129,9 @@
           <a-entity id="leftHand" class="left-controller"></a-entity>
       </a-entity>
 
-      <a-entity id="player" networked="template:#avatar-template;showLocalTemplate:false;" follow-object="objectID: playerCamera"></a-entity>
+      <a-entity id="player" networked follow-object="objectID: playerCamera"></a-entity>
+      <!-- <a-entity networked="template:#flute-template;showLocalTemplate:false;" scale="0.1 0.1 0.1" position = "25 0.5 -19.5" id="flute" grabbable gltf-model="#fluteModel" dynamic-body></a-entity> -->
+      <!-- <a-entity scale="0.01 0.01 0.01" position = "24 1 -19.5" id="npc" gltf-model="#npcModel" material="src:#npcTexture; normalMap:#npcNormal; roughness:#npcRoughness" nav-agent="speed: 1.5"></a-entity> -->
 
       <a-entity static-body 
         geometry="primitive: plane; width: 10000; height: 10000;" visible="false" rotation="-90 0 0"></a-entity>
@@ -131,6 +144,7 @@
       <a-entity id = "sceneLight" light="color: #ffffff; intensity: 0.02" position="5 5 5"></a-entity>
       <a-entity id="exit" visible="false" geometry="primitive: box; width: 1.5; height: 2; depth: 2;" position="1.5 1 0"  exit></a-entity>
       <a-entity light="type:point; intensity:1; distance:1; decay:1;" position="1.5 1 0"></a-entity>
+      <a-entity id="goal" geometry="primitive:plane; width: 1; height: 1;" material="src:/images/star.png" position="1.5 3 0" rotation="-90 0 0"></a-entity>
 
       <a-sky color="#000000"></a-sky>
     </a-scene>
