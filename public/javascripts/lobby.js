@@ -21,6 +21,12 @@ const ROLETEXT = {
     2: "Explorer"
 }
 
+const ROLEGOAL = {
+    0: "None",
+    1: "Help the Explorer Escape",
+    2: "With help from the Librarian escape the Maze (VR Headset Recommended)"
+}
+
 const ROLEBUTTONS = {
     0: null,
     1: "#btn-lib",
@@ -224,6 +230,7 @@ $(() => {
     let $selectedRole = $('#selected-role');
     let $libBtnSpan = $('#lib-btn-span');
     let $runBtnSpan = $('#run-btn-span');
+    let $selectedRoleGoal = $('#selected-role-goal');
 
     $libBtn.on('click', () => {
         if (otherRole == ROLE_LIBRARIAN) {
@@ -239,6 +246,7 @@ $(() => {
             $startButton.prop("disabled", false);
         }
         $selectedRole.text(ROLETEXT[currentRole]);
+        $selectedRoleGoal.text(ROLEGOAL[currentRole]);
         NAF.connection.broadcastData("role", currentRole);
     });
 
@@ -256,6 +264,7 @@ $(() => {
             $startButton.prop("disabled", false);
         }
         $selectedRole.text(ROLETEXT[currentRole]);
+        $selectedRoleGoal.text(ROLEGOAL[currentRole]);
         NAF.connection.broadcastData("role", currentRole);
     });
 
