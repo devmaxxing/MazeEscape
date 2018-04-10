@@ -24,16 +24,7 @@
     <script src="/javascripts/offlinescripts/super-hands.min.js"></script>
 
     <script>
-        var currentRoom = <%- '"' + roomName + '"'%>;s
-        easyrtc.getRoomList(
-          function(rooms){
-            if (rooms[roomName]["numberClients"] > 1) {
-              alert("This room is full!");
-              location.href = "/lobbyList";
-            }
-          },
-          function(){}
-        );
+        var currentRoom = <%- '"' + roomName + '"'%>;
         function onConnect() {
             console.log("OnConnect");
             if (easyrtc.getRoomOccupantsAsArray(currentRoom).length > 2) {
@@ -116,12 +107,6 @@
             </a-entity>
           </a-entity>
         </script>
-
-        <script id="flute-template" type="text/html">
-          <a-entity class="flute">
-            <a-box color="#ffffff"></a-box>
-          </a-entity>
-        </script>
         <!-- /Templates -->
       </a-assets>
 
@@ -136,7 +121,7 @@
           <a-entity id="leftHand" class="left-controller"></a-entity>
       </a-entity>
 
-      <a-entity id="player" networked follow-object="objectID: playerCamera"></a-entity>
+      <a-entity id="player" networked="template:#avatar-template;showLocalTemplate:false;" follow-object="objectID: playerCamera"></a-entity>
       <!-- <a-entity networked="template:#flute-template;showLocalTemplate:false;" scale="0.1 0.1 0.1" position = "25 0.5 -19.5" id="flute" grabbable gltf-model="#fluteModel" dynamic-body></a-entity> -->
       <!-- <a-entity scale="0.01 0.01 0.01" position = "24 1 -19.5" id="npc" gltf-model="#npcModel" material="src:#npcTexture; normalMap:#npcNormal; roughness:#npcRoughness" nav-agent="speed: 1.5"></a-entity> -->
 
