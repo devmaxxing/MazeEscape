@@ -40,7 +40,7 @@ var otherRole = ROLE_NONE;
 var ready = false;
 var otherReady = false;
 
-let startTime;
+var startTime;
 
 function setState(state) {
     currentState = state;
@@ -54,13 +54,13 @@ function syncStart (senderId, dataType, data, targetId) {
     }
 }
 
-function finish(senderId, dataType, data, targetId) {
+function syncFinish(senderId, dataType, data, targetId) {
     AFRAME.scenes[0].removeAttribute('networked-scene');
+    console.log(data);
     finish(data);
 }
 
-function finish(endTime) {
-    let totalTimeMinutes = Math.round((endTime-startTime)/60000);
+function finish(totalTimeMinutes) {
     $('#time-span').html(totalTimeMinutes);
     $('#finish-screen').show();
     $('#game').hide();

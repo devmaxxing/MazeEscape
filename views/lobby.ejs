@@ -21,7 +21,7 @@
             console.log("OnConnect");
             NAF.connection.subscribeToDataChannel("role", syncRole);
             NAF.connection.subscribeToDataChannel("ready", syncStart);
-            NAF.connection.subscribeToDataChannel("finish", finish);
+            NAF.connection.subscribeToDataChannel("finish", syncFinish);
         }
         // Define custom schema for syncing avatar color, set by random-color
         NAF.schemas.add({
@@ -39,7 +39,7 @@
       </script>
   </head>
   <body>
-      <a-scene id="game" networked-scene=<%- '"app:maze_escape; room:' + roomName + '; adapter:easyrtc; audio:true;"'%>>
+      <a-scene hidden id="game" networked-scene=<%- '"app:maze_escape; room:' + roomName + '; adapter:easyrtc; audio:true;"'%>>
       <a-assets>
 
         <img id="grid" src="https://img.gs/bbdkhfbzkk/stretch/https://i.imgur.com/25P1geh.png" crossorigin="anonymous">
