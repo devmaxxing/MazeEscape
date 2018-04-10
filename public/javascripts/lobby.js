@@ -36,6 +36,7 @@ var currentState = STATE_WAITING;
 
 var currentRole = ROLE_NONE;
 var otherRole = ROLE_NONE;
+var otherClientID = null;
 
 var ready = false;
 var otherReady = false;
@@ -116,7 +117,7 @@ function syncRole (senderId, dataType, data, targetId) {
     }
     if (data == 0) {
         deselectRole(otherRole);
-        setRoleDisabled(otherRole, false);
+        setRoleDisabled(otherRole, ready);
         otherRole = data;
     } else if (data != currentRole) {
         otherRole = data;
@@ -180,18 +181,24 @@ $(() => {
 
     document.body.addEventListener('clientConnected', function (evt) {
         console.error('clientConnected event. clientId =', evt.detail.clientId);
-        setState(STATE_ROLE_SELECT);
-        $lobbyCount.html('2');
-        NAF.connection.broadcastData("role", currentRole);
-        NAF.connection.broadcastData("ready", ready);
+        if (otherClientID == null) {
+            otherClientID = evt.detail.clientId;
+            setState(STATE_ROLE_SELECT);
+            $lobbyCount.html('2');
+            NAF.connection.broadcastData("role", currentRole);
+            NAF.connection.broadcastData("ready", ready);
+        }
     });
 
     document.body.addEventListener('clientDisconnected', function (evt) {
-        console.error('clientDisconnected event. clientId =', evt.detail.clientId);
-        setState(STATE_WAITING);
-        $lobbyCount.html('1');
-        otherRole = 0;
-        otherReady = false;
+        if (evt.detail.clientId == otherClientID) {
+            otherClientID = null;
+            console.error('clientDisconnected event. clientId =', evt.detail.clientId);
+            setState(STATE_WAITING);
+            $lobbyCount.html('1');
+            otherRole = 0;
+            otherReady = false;
+        }
     });
 
     $startButton.on('click', () => {
