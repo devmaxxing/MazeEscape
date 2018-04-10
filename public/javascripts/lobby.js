@@ -40,6 +40,17 @@ var otherRole = ROLE_NONE;
 var ready = false;
 var otherReady = false;
 
+let startTime;
+let checkVictoryInterval;
+
+function checkVictory() {
+    let playerPos = document.querySelector('#playerCamera').object3D.parent.position;
+    if (playerPos.x >= 1.3 && playerPos.x <= 1.8 && playerPos.y == 0.19 && playerPos.z > -0.31) {
+        NAF.connection.broadcastData("finish", '');
+        finish();
+    }
+}
+
 function setState(state) {
     currentState = state;
     $("#lobby-status").text(STATUS_MESSAGES[currentState]);
@@ -50,6 +61,17 @@ function syncStart (senderId, dataType, data, targetId) {
     if (otherReady && ready) {
         start();
     }
+}
+
+function finish() {
+    AFRAME.scenes[0].removeAttribute('networked-scene');
+    let endTime = new Date().getTime();
+    let totalTimeMinutes = Math.round((endTime-startTime)/60000);
+    $('#time-span').html(totalTimeMinutes);
+    $('#finish-screen').show();
+    $('#game').hide();
+    $('#main-div').hide();
+    clearInterval(checkVictoryInterval);
 }
 
 function start () {
@@ -69,6 +91,10 @@ function start () {
 }
 
 function initGame() {
+    NAF.connection.subscribeToDataChannel("finish", () => {
+        finish();
+    });
+    checkVictoryInterval = setInterval(checkVictory, 5000);
     if (currentRole == ROLE_LIBRARIAN) {
         //set camera to overhead and disable movement
         $("#rig").removeAttr("movement-controls");
@@ -131,6 +157,7 @@ function selectRole(role) {
     }
 }
 
+<<<<<<< 8a62dd5196c6a38c2d14b9bc5a4164167aec50f5
 function setEntityY(entitySelector, y) {
     var entity = document.querySelector(entitySelector);
     var entityPos = entity.getAttribute("position");
@@ -142,6 +169,9 @@ function setPlayerHeight(y) {
     setEntityY("#leftHand", y);
     setEntityY("#rightHand", y);
 }
+=======
+
+>>>>>>> win condition
 
 $(() => {
     // Start Logic
@@ -180,10 +210,7 @@ $(() => {
     });
 
     $startButton.on('click', () => {
-            // $warningDiv.slideToggle();
-            // setTimeout(() => {
-            //     $warningDiv.slideToggle();
-            // }, 4000);
+        startTime = new Date().getTime();
         ready = true;
         setRoleDisabled(ROLE_EXPLORER, true);
         setRoleDisabled(ROLE_LIBRARIAN, true);
