@@ -86,7 +86,9 @@ function initGame() {
         $("#mazeObject").remove();
         //enlarge scale of networked objects
     } else if (currentRole == ROLE_EXPLORER) {
-        $("#music").attr("src", "/sounds/Desolation.mp3");
+        var audio = new Audio("/sounds/Desolation.mp3");
+        audio.loop = true;
+        audio.play();
         //hide the networked object
         $(".avatar").attr("visible", "false");
     }
@@ -129,6 +131,18 @@ function selectRole(role) {
     }
 }
 
+function setEntityY(entitySelector, y) {
+    var entity = document.querySelector(entitySelector);
+    var entityPos = entity.getAttribute("position");
+    entity.setAttribute("position", entityPos.x + " " + y + " " + entityPos.z);
+}
+
+function setPlayerHeight(y) {
+    setEntityY("#playerCamera", y);
+    setEntityY("#leftHand", y);
+    setEntityY("#rightHand", y);
+}
+
 $(() => {
     // Start Logic
     let startPressed = false;
@@ -138,6 +152,16 @@ $(() => {
     let $countdownSpan = $('#countdown-span');
     let $lobbyStatus = $('#lobby-status');
     let $lobbyCount = $('#lobby-count');
+
+    document.addEventListener('keydown', function (evt) {
+        if (evt.key == '1') {
+            setPlayerHeight(1.6);
+        } else if (evt.key == '2') {
+            setPlayerHeight(0);
+        } else if (evt.key == '3') {
+            setPlayerHeight(-0.45);
+        }
+    });
 
     document.body.addEventListener('clientConnected', function (evt) {
         console.error('clientConnected event. clientId =', evt.detail.clientId);

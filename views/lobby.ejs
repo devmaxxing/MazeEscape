@@ -36,7 +36,7 @@
         });
       </script>
   </head>
-  <body>    
+  <body>
       <a-scene hidden id="game" networked-scene=<%- '"app:maze_escape; room:' + roomName + '; adapter:easyrtc; audio:true;"'%>>
       <a-assets>
 
@@ -95,9 +95,7 @@
       <a-entity id="mazeNavMesh" visible="false" gltf-model="#maze-nav-mesh" nav-mesh></a-entity>
 
       <a-entity id="rig" progressive-controls movement-controls="constrainToNavMesh: true" position="20.5 0 -19.5">
-          <a-entity id="playerCamera" camera look-controls position="0 -0.45 0">
-            <a-sound id="music" autoplay="true" loop="true"></a-sound>
-          </a-entity>
+          <a-entity id="playerCamera" camera look-controls position="0 -0.45 0"></a-entity>
           <a-entity id="rightHand" position="0 -0.45 0" class="right-controller"></a-entity>
           <a-entity id="leftHand" position="0 -0.45 0" class="left-controller"></a-entity>
       </a-entity>
@@ -111,8 +109,8 @@
           <a-entity light="type: spot;angle: 30" position = "0.1 0 0" rotation = "0 -90 0"></a-entity>
       </a-entity>
 
-      <a-entity light="color: #ffffff; intensity: 1; type: ambient;" visible=""></a-entity>
-      <a-entity id = "sceneLight" light="color: #ffffff; intensity: 0.01" position="5 5 5"></a-entity>
+      <a-entity light="color: #ffffff; intensity: 0.01; type: ambient;" visible=""></a-entity>
+      <a-entity id = "sceneLight" light="color: #ffffff; intensity: 0" position="5 5 5"></a-entity>
 
       <a-sky color="#000000"></a-sky>
     </a-scene>
