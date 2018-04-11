@@ -35,6 +35,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/javascripts', express.static(__dirname + '/node_modules/easyrtc/api/'));
+app.use('/javascripts', express.static(__dirname + '/node_modules/networked-aframe/dist/'));
+app.use('/javascripts', express.static(__dirname + '/node_modules/socket.io-client/dist/'));
+app.use('/javascripts', express.static(__dirname + '/node_modules/aframe-extras/dist/'));
+app.use('/javascripts', express.static(__dirname + '/node_modules/aframe-physics-system/dist/'));
+app.use('/javascripts', express.static(__dirname + '/node_modules/super-hands/dist/'));
 
 // Include jquery
 app.use('/javascripts', express.static(__dirname+'/node_modules/jquery/dist/')); 

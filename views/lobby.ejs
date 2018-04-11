@@ -3,34 +3,27 @@
     <!-- Stylesheets in here -->
     <% include ./partials/head %>
     <link rel="stylesheet" href="/stylesheets/lobby.css">
-    <!-- <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script> -->
-    <script src="/javascripts/offlinescripts/aframe.min.js"></script>
-    <!-- <script src="https://cdn.rawgit.com/donmccurdy/aframe-physics-system/v3.0.0/dist/aframe-physics-system.min.js"></script> -->
-    <script src="/javascripts/offlinescripts/aframe-physics-system.min.js"></script>
-    <!-- <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v4.0.1/dist/aframe-extras.min.js"></script> -->
-    <script src="/javascripts/offlinescripts/aframe-extras.min.js"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js"></script> -->
-    <script src="/javascripts/offlinescripts/socket.io.min.js"></script>
+    <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+    <script src="/javascripts/aframe-physics-system.min.js"></script>
+    <script src="/javascripts/aframe-extras.min.js"></script>
+    <script src="/javascripts/socket.io.min.js"></script>
     <script src="/javascripts/easyrtc.js"></script>
-    <!-- <script src="https://unpkg.com/networked-aframe@^0.5.1/dist/networked-aframe.min.js"></script> -->
-    <script src="/javascripts/offlinescripts/networked-aframe.min.js"></script>
-    <!-- <script src="https://unpkg.com/aframe-randomizer-components@^3.0.1/dist/aframe-randomizer-components.min.js"></script> -->
-    <script src="/javascripts/offlinescripts/aframe-randomizer-components.min.js"></script>
-    <!-- <script src="https://unpkg.com/aframe-particle-system-component@1.0.5/dist/aframe-particle-system-component.min.js"></script> -->
-    <script src="/javascripts/offlinescripts/aframe-particle-system-component.min.js"></script>
+    <script src="/javascripts/networked-aframe.min.js"></script>
     <script src="/javascripts/follow-object.js"></script>
     <script src="/javascripts/exit.js"></script>
-    <!-- <script src="https://unpkg.com/super-hands@2.1.0/dist/super-hands.min.js"></script> -->
-    <script src="/javascripts/offlinescripts/super-hands.min.js"></script>
+    <script src="/javascripts/super-hands.min.js"></script>
 
+    <script src="/javascripts/browserCheck.js"></script>
     <script>
         var currentRoom = <%- '"' + roomName + '"'%>;
+
         function onConnect() {
             console.log("OnConnect");
             if (easyrtc.getRoomOccupantsAsArray(currentRoom).length > 2) {
               easyrtc.leaveRoom(currentRoom);
-              alert("This room is full!");
-              location.href="/lobbyList";
+              displayErrorModal(ERROR_ROOM_FULL, "ERROR", function() {
+                  location.href="/lobbyList";
+              })
             } else {
               NAF.connection.subscribeToDataChannel("role", syncRole);
               NAF.connection.subscribeToDataChannel("ready", syncStart);
@@ -53,6 +46,7 @@
       </script>
   </head>
   <body>
+      <% include ./partials/modal %>
       <a-scene hidden id="game" networked-scene=<%- '"app:maze_escape; room:' + roomName + '; adapter:easyrtc; audio:true;"'%>>
       <a-assets>
 

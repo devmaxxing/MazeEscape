@@ -179,6 +179,12 @@ $(() => {
     let $lobbyStatus = $('#lobby-status');
     let $lobbyCount = $('#lobby-count');
 
+    try {
+        AFRAME.scenes[0].emit('connect');
+    } catch (err) {
+        displayErrorModal(ERROR_FAILED_TO_CONNECT);
+    }
+
     document.addEventListener('keydown', function (evt) {
         if (evt.key == '1') {
             setPlayerHeight(1.6);

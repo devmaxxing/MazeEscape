@@ -7,6 +7,8 @@
     "start-dev": "nodemon ./bin/www"
   },
   "dependencies": {
+    "aframe-extras": "^4.0.2",
+    "aframe-physics-system": "^3.0.2",
     "body-parser": "~1.18.2",
     "bootstrap": "^4.0.0",
     "cookie-parser": "~1.4.3",
@@ -18,7 +20,9 @@
     "morgan": "~1.9.0",
     "networked-aframe": "^0.4.0",
     "normalize.css": "^8.0.0",
-    "serve-favicon": "~2.4.5"
+    "serve-favicon": "~2.4.5",
+    "socket.io": "^2.1.0",
+    "super-hands": "^2.1.0"
   },
   "devDependencies": {
     "nodemon": "^1.17.3"

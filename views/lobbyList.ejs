@@ -4,7 +4,8 @@
     <% include ./partials/head %>
     <link rel="stylesheet" href="/stylesheets/lobbyList.css">
   </head>
-  <body>    
+  <body>
+      <% include ./partials/modal %>
     <main class="container">
         <div class="row title-text">
             <div class="col-lg-12 text-center align-text-bottom">
@@ -80,6 +81,7 @@
     <footer>
       <!-- Scripts throw in here -->
       <% include ./partials/footer %>
+      <script src="/javascripts/browserCheck.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js"></script>
       <script src="/javascripts/easyrtc.js"></script>
       <script src="/javascripts/lobby-list.js"></script>
