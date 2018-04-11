@@ -49,9 +49,6 @@
       <% include ./partials/modal %>
       <a-scene hidden id="game" networked-scene=<%- '"app:maze_escape; room:' + roomName + '; adapter:easyrtc; audio:true;"'%>>
       <a-assets>
-
-        <img id="grid" src="https://img.gs/bbdkhfbzkk/stretch/https://i.imgur.com/25P1geh.png" crossorigin="anonymous">
-
         <a-asset-item id="maze" src="/models/maze.gltf"></a-asset-item>
         <a-asset-item id="maze-nav-mesh" src="/models/maze_nav-mesh.gltf"></a-asset-item>
         <a-asset-item id="maze-map" src="/models/maze_map.gltf"></a-asset-item>
